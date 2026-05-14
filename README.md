@@ -74,14 +74,13 @@ var gfindIndex = require( '@stdlib/blas-ext-base-ndarray-gfind-index' );
 Returns the index of the first element in a one-dimensional ndarray which passes a test implemented by a predicate function.
 
 ```javascript
-var ndarray = require( '@stdlib/ndarray-base-ctor' );
+var vector = require( '@stdlib/ndarray-vector-ctor' );
 
 function isEven( v ) {
     return v % 2.0 === 0.0;
 }
 
-var xbuf = [ 1.0, 3.0, 4.0, 2.0 ];
-var x = new ndarray( 'generic', xbuf, [ 4 ], [ 1 ], 0, 'row-major' );
+var x = vector( [ 1.0, 3.0, 4.0, 2.0 ], 'generic' );
 
 var idx = gfindIndex( [ x ], isEven );
 // returns 2
@@ -90,14 +89,13 @@ var idx = gfindIndex( [ x ], isEven );
 If no element passes a test implemented by a predicate function, the function returns `-1`.
 
 ```javascript
-var ndarray = require( '@stdlib/ndarray-base-ctor' );
+var vector = require( '@stdlib/ndarray-vector-ctor' );
 
 function isEven( v ) {
     return v % 2.0 === 0.0;
 }
 
-var xbuf = [ 1.0, 3.0, 5.0, 7.0 ];
-var x = new ndarray( 'generic', xbuf, [ 4 ], [ 1 ], 0, 'row-major' );
+var x = vector( [ 1.0, 3.0, 5.0, 7.0 ], 'generic' );
 
 var idx = gfindIndex( [ x ], isEven );
 // returns -1
@@ -118,15 +116,14 @@ The callback function is provided the following arguments:
 To set the callback execution context, provide a `thisArg`.
 
 ```javascript
-var ndarray = require( '@stdlib/ndarray-base-ctor' );
+var vector = require( '@stdlib/ndarray-vector-ctor' );
 
 function isEven( v ) {
     this.count += 1;
     return v % 2.0 === 0.0;
 }
 
-var xbuf = [ 1.0, 3.0, 4.0, 2.0 ];
-var x = new ndarray( 'generic', xbuf, [ 4 ], [ 1 ], 0, 'row-major' );
+var x = vector( [ 1.0, 3.0, 4.0, 2.0 ], 'generic' );
 var ctx = {
     'count': 0
 };
@@ -159,8 +156,7 @@ var count = ctx.count;
 <!-- eslint no-undef: "error" -->
 
 ```javascript
-var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
-var ndarray = require( '@stdlib/ndarray-base-ctor' );
+var discreteUniform = require( '@stdlib/random-discrete-uniform' );
 var ndarray2array = require( '@stdlib/ndarray-to-array' );
 var gfindIndex = require( '@stdlib/blas-ext-base-ndarray-gfind-index' );
 
@@ -168,10 +164,11 @@ function isEven( v ) {
     return v % 2.0 === 0.0;
 }
 
-var xbuf = discreteUniform( 10, -100, 100, {
+var opts = {
     'dtype': 'generic'
-});
-var x = new ndarray( 'generic', xbuf, [ xbuf.length ], [ 1 ], 0, 'row-major' );
+};
+
+var x = discreteUniform( [ 10 ], -100, 100, opts );
 console.log( ndarray2array( x ) );
 
 var idx = gfindIndex( [ x ], isEven );
