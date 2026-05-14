@@ -41,14 +41,32 @@ limitations under the License.
 
 <!-- /.intro -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/blas-ext-base-ndarray-gfind-index
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
 ```javascript
-import gfindIndex from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-ndarray-gfind-index@deno/mod.js';
+var gfindIndex = require( '@stdlib/blas-ext-base-ndarray-gfind-index' );
 ```
 
 #### gfindIndex( arrays, clbk\[, thisArg] )
@@ -56,14 +74,13 @@ import gfindIndex from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-ndar
 Returns the index of the first element in a one-dimensional ndarray which passes a test implemented by a predicate function.
 
 ```javascript
-import ndarray from 'https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-base-ctor@deno/mod.js';
+var vector = require( '@stdlib/ndarray-vector-ctor' );
 
 function isEven( v ) {
     return v % 2.0 === 0.0;
 }
 
-var xbuf = [ 1.0, 3.0, 4.0, 2.0 ];
-var x = new ndarray( 'generic', xbuf, [ 4 ], [ 1 ], 0, 'row-major' );
+var x = vector( [ 1.0, 3.0, 4.0, 2.0 ], 'generic' );
 
 var idx = gfindIndex( [ x ], isEven );
 // returns 2
@@ -72,14 +89,13 @@ var idx = gfindIndex( [ x ], isEven );
 If no element passes a test implemented by a predicate function, the function returns `-1`.
 
 ```javascript
-import ndarray from 'https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-base-ctor@deno/mod.js';
+var vector = require( '@stdlib/ndarray-vector-ctor' );
 
 function isEven( v ) {
     return v % 2.0 === 0.0;
 }
 
-var xbuf = [ 1.0, 3.0, 5.0, 7.0 ];
-var x = new ndarray( 'generic', xbuf, [ 4 ], [ 1 ], 0, 'row-major' );
+var x = vector( [ 1.0, 3.0, 5.0, 7.0 ], 'generic' );
 
 var idx = gfindIndex( [ x ], isEven );
 // returns -1
@@ -100,15 +116,14 @@ The callback function is provided the following arguments:
 To set the callback execution context, provide a `thisArg`.
 
 ```javascript
-import ndarray from 'https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-base-ctor@deno/mod.js';
+var vector = require( '@stdlib/ndarray-vector-ctor' );
 
 function isEven( v ) {
     this.count += 1;
     return v % 2.0 === 0.0;
 }
 
-var xbuf = [ 1.0, 3.0, 4.0, 2.0 ];
-var x = new ndarray( 'generic', xbuf, [ 4 ], [ 1 ], 0, 'row-major' );
+var x = vector( [ 1.0, 3.0, 4.0, 2.0 ], 'generic' );
 var ctx = {
     'count': 0
 };
@@ -141,19 +156,19 @@ var count = ctx.count;
 <!-- eslint no-undef: "error" -->
 
 ```javascript
-import discreteUniform from 'https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@deno/mod.js';
-import ndarray from 'https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-base-ctor@deno/mod.js';
-import ndarray2array from 'https://cdn.jsdelivr.net/gh/stdlib-js/ndarray-to-array@deno/mod.js';
-import gfindIndex from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-ndarray-gfind-index@deno/mod.js';
+var discreteUniform = require( '@stdlib/random-discrete-uniform' );
+var ndarray2array = require( '@stdlib/ndarray-to-array' );
+var gfindIndex = require( '@stdlib/blas-ext-base-ndarray-gfind-index' );
 
 function isEven( v ) {
     return v % 2.0 === 0.0;
 }
 
-var xbuf = discreteUniform( 10, -100, 100, {
+var opts = {
     'dtype': 'generic'
-});
-var x = new ndarray( 'generic', xbuf, [ xbuf.length ], [ 1 ], 0, 'row-major' );
+};
+
+var x = discreteUniform( [ 10 ], -100, 100, opts );
 console.log( ndarray2array( x ) );
 
 var idx = gfindIndex( [ x ], isEven );
@@ -181,7 +196,7 @@ console.log( idx );
 
 ## Notice
 
-This package is part of [stdlib][stdlib], a standard library with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
+This package is part of [stdlib][stdlib], a standard library for JavaScript and Node.js, with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
 
 For more information on the project, filing bug reports and feature requests, and guidance on how to develop [stdlib][stdlib], see the main project [repository][stdlib].
 
